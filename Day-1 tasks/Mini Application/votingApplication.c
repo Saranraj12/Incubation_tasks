@@ -23,7 +23,7 @@ void castVote(int* Counter){
 
 void showResult(int* Counter) 
 {
-	int len = sizeof(Counter)/sizeof(int);
+	int len = 4;
 	char candidates[4][100] = {"Aggarwal", "Viswanathan", "Abdul", "Venkatesh"};
 	int highestVotes = Counter[0];
 	int candidateNum = 0;
