@@ -116,7 +116,7 @@ int main() {
 	int data,choice,loop = 1;
 	printf("**********Linked List**********\n");
 	while(loop) {
-		printf("\nSelect Operation \n1.Create\n2.Delete\n3.Search\n4.Reverse\n5.Print\n6.exit\n");
+		printf("\nSelect Operation \n1.Create\n2.Delete Last Element\n3.Search\n4.Reverse\n5.Print\n6.Delete Element\n7.exit\n");
 		printf("Enter your Choice : ");
 		scanf("%d",&choice);
 		switch(choice) {
@@ -127,7 +127,7 @@ int main() {
 					break;
 			case 2:
 					printf("\nAs per your choice Last element get removed");
-					deleteElement();
+					deleteLast();
 					break;
 			case 3:
 					printf("\nEnter the data to search ");
@@ -140,7 +140,10 @@ int main() {
 			case 5: printf("\n the elements are  ");
 					printLL();
 					break;
-			case 6: exit(0);
+			case 6: printf("\nDelete Element with value\n");
+					scanf("%d",&data);
+					deleteElement(data);
+			case 7: exit(0);
 					
 			default: printf("Enter the number b/w 1-5");
 		}
