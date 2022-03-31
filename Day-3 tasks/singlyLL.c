@@ -8,7 +8,7 @@ typedef struct Node{
 	struct Node *next;
 }Node;
 
-Node *head = NULL,*ptr;
+Node *head = NULL,*ptr,*p;
 void createNode(int data){
 	if (head == NULL) {
 		Node *node = (Node*)malloc(sizeof(Node));
@@ -45,6 +45,35 @@ void deleteLast() {
 		ptr->next = NULL;
 	}
 }
+
+void deleteElement() {
+	int data1;
+	printf("\nEnter the element to delete  : ");
+	scanf("%d",&data1);
+	if (head == NULL)
+		printf("\nLinked List is Empty\n");
+	else {
+		ptr = head;
+		if(ptr->data == data1){
+			free(head);
+			head = NULL;
+			return;
+		}
+		while(ptr->next->next!= NULL) {
+			if(ptr->next->data == data1) {
+				p = ptr->next;
+				ptr->next = ptr->next->next;
+				break;
+			}
+			free(p);
+			ptr = ptr->next;
+		}
+//		ptr->next = NULL;
+		
+	}
+		
+}
+
 
 void printLL() {
 	if(head == NULL)
@@ -98,7 +127,7 @@ int main() {
 					break;
 			case 2:
 					printf("\nAs per your choice Last element get removed");
-					deleteLast();
+					deleteElement();
 					break;
 			case 3:
 					printf("\nEnter the data to search ");
