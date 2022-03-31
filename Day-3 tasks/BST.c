@@ -1,39 +1,52 @@
-//Binary Search Tree
+// Binary Search Tree operations in C
 
 #include <stdio.h>
 #include <stdlib.h>
-typedef struct Tree{
-	struct Tree *left;
-	int value;
-	struct Tree *right;
-}Tree;
-Tree *root = NULL,*node;
 
-void insertVal(int data,Tree *root) {
-	if (root == NULL){
-		node = (Tree*)malloc(sizeof(Tree));
-		node->value = data;
-		node->left = NULL;
-		node->right = NULL;
-		root = node;
-	}
-	else{
-		if(root->value > data) {
-			insertVal(data,root->left);
-		}
-		else {
-			insertVal(data,root->right);
-		}
-	}	
+typedef struct node {
+  int value;
+  struct node *left;
+  struct node *right;
+} Node;
+
+
+struct node *createNode(int data) {
+  Node *temp = (struct node *)malloc(sizeof(struct node));
+  temp->value = data;
+  temp->left = temp->right = NULL;
+  return temp;
 }
-void printTree() {
-	printf("%d",root->value);
+
+void inorder(struct node *root) {
+  if (root != NULL) {
+
+    inorder(root->left);
+    printf("%d -> ", root->value);
+    inorder(root->right);
+  }
 }
+
+struct node* insertNode(struct node *node, int data) {
+  if (node == NULL) 
+  		return createNode(data);
+  		
+  if (data < node->value)
+    node->left = insertNode(node->left, data);
+  else
+    node->right = insertNode(node->right, data);
+
+  return node;
+}
+
+
+
 int main() {
-	int arr[] = {23,2, 45, 1, 8, 12, 10, 6, 43, 20, 18, 37, 30, 27, 11, 10};
-	for(int i = 0;i < 16;i++) {
-		insertVal(arr[i],root);
+  Node *root = NULL;
+  int arr[] = {23, 2, 45,1, 8, 12, 10, 6, 43, 20, 18, 37, 30, 27, 11, 10},i;
+	for(i = 0;i < 16;i++){
+		root = insertNode(root,arr[i]);
 	}
-	printTree();
-	return 0;
+
+  printf("Inorder traversal: ");
+  inorder(root);
 }
