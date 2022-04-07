@@ -26,7 +26,7 @@ void inorder(struct node *root) {
   }
 }
 
-struct node* insertNode(struct node *node, int data) {
+struct node* insertNode(Node *node, int data) {
   if (node == NULL) 
   		return createNode(data);
   		
@@ -38,6 +38,18 @@ struct node* insertNode(struct node *node, int data) {
   return node;
 }
 
+void printBT(Node *root, int gap)
+{
+    if (root == NULL)
+        return;
+    gap += 10;
+    printBT(root->right, gap);
+    printf("\n");
+    for (int i = 5; i < gap; i++)
+        printf(" ");
+    printf("              %d\n", root->value);
+    printBT(root->left, gap);
+}
 
 
 int main() {
@@ -49,4 +61,5 @@ int main() {
 
   printf("Inorder traversal: ");
   inorder(root);
+  printBT(root,0);
 }
