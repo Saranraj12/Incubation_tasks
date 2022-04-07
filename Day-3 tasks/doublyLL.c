@@ -9,7 +9,7 @@ typedef struct Node{
 	struct Node *right;
 }Node;
 
-Node *head = NULL,*ptr;
+Node *head = NULL,*ptr,*clear;
 void createNode(int data){
 	if (head == NULL) {
 		Node *node = (Node*)malloc(sizeof(Node));
@@ -37,16 +37,17 @@ void deleteLast() {
 	else {
 		ptr = head;
 		if(ptr->right == NULL){
-			free(head);
+			clear = head;
 			head = NULL;
 			return;
 		}
 		while(ptr->right->right != NULL) {
 			ptr = ptr->right;
 		}
-		free(ptr->right);
+		clear = ptr->right;
 		ptr->right = NULL;
 	}
+	free(clear);
 }
 
 void printLL() {
