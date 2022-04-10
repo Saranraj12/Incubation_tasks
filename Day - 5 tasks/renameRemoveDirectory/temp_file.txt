@@ -1,0 +1,3 @@
+Rename
+remove
+checks directory exists or not
