@@ -1,0 +1,42 @@
+
+
+#include <stdio.h>
+
+
+
+void removeLines(){
+	FILE *fp1,*fp2;
+	char ch;
+	int f=0,count = 0;
+	fp1 = fopen("removeComment.c","r");
+	fp2 = fopen("removed.txt","w");
+	
+	while((ch = fgetc(fp1))!=EOF) {
+		if(f == 3 && ch == '\n') count++;
+		if (ch == '
+			f = 2;
+			continue;
+		}
+		else if(ch == '*' && f == 1){
+			f = 3;
+			continue;
+		}
+		if(f == 2) {
+			if (ch == '\n') {
+				count++;
+				f = 0;
+				fputc(ch,fp2);
+			}
+			continue;	
+		}
+		if(f == 3) {
+			if (ch == '*') {
+				f = 4;
+			}
+			continue;	
+		}
+		if(f == 4) {
+			if (ch == '
+int main() {
+	removeLines();
+}
