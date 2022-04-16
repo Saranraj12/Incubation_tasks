@@ -5,6 +5,7 @@ Calculate the days excluding the Saturday and Sunday.
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 
 struct Student {
 	int sid;
@@ -19,6 +20,7 @@ struct Date {
 };
 
 typedef struct LibraryBook {
+	int book_id;
 	char bookName[20];
 	struct Date issueDate;
 	struct Date dueDate;
@@ -43,6 +45,11 @@ void copyString(char* copy, char* original) {
 }
 
 void initialize() {
+	
+	books[0].book_id = 0;
+	books[1].book_id = 1;
+	books[2].book_id = 2;
+	books[3].book_id = 3;
 	
 	copyString(books[0].bookName, "Story Book");
 	books[0].issueDate.day = 12, books[0].issueDate.month =10, books[0].issueDate.year =2021;
@@ -72,23 +79,78 @@ void initialize() {
 	copyString(books[3].student.phno ,"7986543210");
 	books[3].student.sid = 1004;
 	
-	id += 4
+	id += 4;
+}
+
+void timeAllocate(int id) {
+	if (books[id].issueDate.day > 25 ) {
+		books[id].dueDate.day = 30 - books[id].issueDate.day + 5;
+		if (books[id].issueDate.month == 12) {
+			books[id].dueDate.month = 1;
+			books[id].dueDate.year =  books[id].issueDate.year + 1;
+		}
+		else{
+			books[id].dueDate.month = books[id].issueDate.month + 1;
+			books[id].dueDate.year =  books[id].issueDate.year;
+		}
+	}
+	else {
+		books[id].dueDate.day = books[id].issueDate.day + 5;
+		books[id].dueDate.month = books[id].issueDate.month;
+		books[id].dueDate.year = books[id].issueDate.year;
+	}
+		
+	
+	printf("\n\n\nYour Due Date : %d/%d/%d \n\n",books[id].dueDate.day,books[id].dueDate.month,books[id].dueDate.year);
 }
 
 void issueBook() {
+	books[id].book_id = id;
 	printf("\nEnter the book name\n");
-	scanf("%d",&books[id].bookName);
-	// add code here
+	scanf("%s",books[id].bookName);
+	printf("\nEnter today date : ");
+	scanf("%d",&books[id].issueDate.day);
+	scanf("%d",&books[id].issueDate.month);
+	scanf("%d",&books[id].issueDate.year);
 	printf("\nEnter your name :");
 	scanf("%s",books[id].student.name);
 	printf("\nEnter your phone number :");
 	scanf("%s",books[id].student.phno);
 	books[id].student.sid = 1000 + id;
+	timeAllocate(id);
+	printf("\nPlease Note down your Book ID : %d\n",books[id].book_id);
 	id++;
 }
 
-void returnBook() {
+
+int fineCalculate(int dd1,int mm1,int yyyy1, int dd2,int mm2,int yyyy2) {
 	
+
+	int totaldays1 = (yyyy1*365)+(mm1*30) +(dd1);
+	int totaldays2 = (yyyy2*365)+(mm2*30) +(dd2);
+	if (totaldays2 > totaldays1) {
+		if (totaldays2 - totaldays1 < 7)
+			return totaldays2 - totaldays1;
+		return (totaldays2 - totaldays1) * 5/7;
+	}
+	return 0;
+}
+
+void returnBook() {
+	int dd,mm,yyyy,bid,fineCost = 10;
+	printf("\nEnter the today date :");
+	scanf("%d %d %d",&dd,&mm,&yyyy);
+	printf("\nEnter the book id : ");
+	scanf("%d",&bid);
+	if(0>bid || bid > id) {
+		printf("\nEnter the correct book id :(");
+		returnBook();
+		return;
+	}
+	int fine = fineCalculate(books[bid].dueDate.day,books[bid].dueDate.month,books[bid].dueDate.year,dd,mm,yyyy);
+	if (fine != 0)
+		printf("you need to pay the fine of %d",fine*fineCost);
+	printf("\nThanks for return the book");
 }
 
 void main() {
@@ -101,12 +163,12 @@ void main() {
 		switch(choice) {
 			case 1: printf("\n\nPlease Enter the Book details \n\n");
 					issueBook();
-					printf("Don't Forget to Return Book within Due Date");
+					printf("\n\nDon't Forget to Return Book within Due Date");
 					break;
 			case 2: printf("\n\nPlease Enter the Book details \n\n");
 					returnBook();
 					break;
-			case 3: printf("\nBye\n");
+			case 3: 
 					exit(0);
 			default: printf("\nEnter the number between 1-3");
 		}
