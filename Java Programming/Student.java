@@ -7,7 +7,7 @@ public class Student{
    int sid;
    static String college,location;
    static{
-      college = "PEC";
+      college = "Panimalar Engineering College"
       location = "Chennai";
    }
    static void changePlace(){
